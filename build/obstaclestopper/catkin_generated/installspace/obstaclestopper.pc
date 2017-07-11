@@ -1,0 +1,8 @@
+prefix=/home/jinwei/catvehicle_ws/install
+
+Name: obstaclestopper
+Description: Description of obstaclestopper
+Version: 1.0.1
+Cflags: 
+Libs: -L/home/jinwei/catvehicle_ws/install/lib 
+Requires: geometry_msgs roscpp std_msgs
