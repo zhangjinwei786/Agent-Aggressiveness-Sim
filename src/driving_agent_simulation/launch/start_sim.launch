@@ -52,7 +52,7 @@ This launch file loads the worlds and models for the catvehicle
       <arg name="velodyne_min_angle" default="-0.4"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find driving_agent_simulation)/worlds/highway_environment.world"/>
+    <arg name="world_name" value="$(find driving_agent_simulation)/worlds/highway_environment_test.world"/>
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
     <arg name="paused" value="$(arg paused)"/>
@@ -77,20 +77,22 @@ This launch file loads the worlds and models for the catvehicle
 
 <include file="$(find catvehicle)/launch/catvehicle.launch">
     <arg name="robot_name" value="one_front_car"/>
-    <arg name="init_pose" value="-x 50 -y -2 -z 0.05"/>
+    <arg name="init_pose" value="-x 50 -y 2 -z 0.05"/>
     <arg name="config_file" value="catvehicle_control.yaml"/>
 </include>
 </group>
 
+<!-- This is the code for second front car
 <group ns="two_front_car">
 <param name="robot_description"
          command="$(find xacro)/xacro.py '$(find catvehicle)/urdf/catvehicle.xacro' roboname:='two_front_car' front_laser_points:='$(arg front_laser_points)' velodyne_points:='$(arg velodyne_points)' camera_right:='$(arg camera_right)' camera_left:='$(arg camera_left)' velodyne_max_angle:='$(arg velodyne_max_angle)' velodyne_min_angle:='$(arg velodyne_min_angle)'" />
 
 <include file="$(find catvehicle)/launch/catvehicle.launch">
     <arg name="robot_name" value="two_front_car"/>
-    <arg name="init_pose" value="-x 30 -y 0 -z 0.05"/>
+    <arg name="init_pose" value="-x 30 -y -2 -z 0.05"/>
     <arg name="config_file" value="catvehicle_control.yaml"/>
 </include>
 </group>
+-->
 
 </launch>
