@@ -66,7 +66,7 @@ This launch file loads the worlds and models for the catvehicle
 
 <include file="$(find catvehicle)/launch/catvehicle.launch">
     <arg name="robot_name" value="main_car"/>
-    <arg name="init_pose" value="-x 0 -y 2 -z 0.05"/>
+    <arg name="init_pose" value="-x 0 -y 6 -z 0.05"/>
     <arg name="config_file" value="catvehicle_control.yaml"/>
 </include>
 </group>
@@ -77,7 +77,7 @@ This launch file loads the worlds and models for the catvehicle
 
 <include file="$(find catvehicle)/launch/catvehicle.launch">
     <arg name="robot_name" value="one_front_car"/>
-    <arg name="init_pose" value="-x 50 -y 2 -z 0.05"/>
+    <arg name="init_pose" value="-x 30 -y 2 -z 0.05"/>
     <arg name="config_file" value="catvehicle_control.yaml"/>
 </include>
 </group>
