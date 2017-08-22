@@ -1,8 +1,8 @@
-prefix=/home/jinwei/catvehicle_ws/install
+prefix=/home/wavelab01/catvehicle_ws/install
 
 Name: catvehicle
 Description: Description of catvehicle
 Version: 2.0.2
-Cflags: -I/home/jinwei/catvehicle_ws/install/include
-Libs: -L/home/jinwei/catvehicle_ws/install/lib -lcatvehicle
+Cflags: -I/home/wavelab01/catvehicle_ws/install/include
+Libs: -L/home/wavelab01/catvehicle_ws/install/lib -lcatvehicle
 Requires: geometry_msgs roscpp rospy sensor_msgs std_msgs velodyne_pointcloud tf

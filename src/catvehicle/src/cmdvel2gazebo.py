@@ -67,7 +67,7 @@ class cmdvel2gazebo:
 
         # how many seconds delay for the dead man's switch
         # TODO: set timeout from launch file or rosparam
-        self.timeout=rospy.Duration.from_sec(1);
+        self.timeout=rospy.Duration.from_sec(0.2);
         self.lastMsg=rospy.Time.now()
 
         # we want maxsteer to be that of the "inside" tire, and since it is 0.6 in gazebo, we

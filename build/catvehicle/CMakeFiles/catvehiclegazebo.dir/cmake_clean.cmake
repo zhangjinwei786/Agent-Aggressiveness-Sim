@@ -1,7 +1,7 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/catvehiclegazebo.dir/src/cont.cc.o"
-  "/home/jinwei/catvehicle_ws/devel/lib/libcatvehiclegazebo.pdb"
-  "/home/jinwei/catvehicle_ws/devel/lib/libcatvehiclegazebo.so"
+  "/home/wavelab01/catvehicle_ws/devel/lib/libcatvehiclegazebo.pdb"
+  "/home/wavelab01/catvehicle_ws/devel/lib/libcatvehiclegazebo.so"
 )
 
 # Per-language clean rules from dependency scanning.

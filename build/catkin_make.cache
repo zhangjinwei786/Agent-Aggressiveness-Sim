@@ -1,2 +1,2 @@
 catvehicle:driving_agent_simulation:obstaclestopper
--DCATKIN_DEVEL_PREFIX=/home/jinwei/catvehicle_ws/devel -DCMAKE_INSTALL_PREFIX=/home/jinwei/catvehicle_ws/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/home/wavelab01/catvehicle_ws/devel -DCMAKE_INSTALL_PREFIX=/home/wavelab01/catvehicle_ws/install -G Unix Makefiles

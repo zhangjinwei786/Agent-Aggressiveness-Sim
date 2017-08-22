@@ -2,6 +2,7 @@
 import rospy
 import math
 import time
+import sys, getopt, math
 from numpy import matrix
 from numpy.linalg import inv
 from geometry_msgs.msg import Twist
@@ -13,13 +14,14 @@ setupFlag = True
 global stopFlag
 stopFlag = True
 
+
 def callback(data):
 	global setupFlag
 	global last_y_pos
 	global last_check_time
-	desired_y_pos = -2
+	desired_y_pos = 6
 	if setupFlag:
-		steeringCtrlConfig(1, 1, 2)
+		steeringCtrlConfig(0.5, 0.5, 3)
 		last_y_pos = desired_y_pos
 		last_check_time = time.time()
 		setupFlag = False
@@ -27,7 +29,8 @@ def callback(data):
 	current_time = time.time()
 	current_y_pos = data.poses[-1].pose.position.y
 	steeringAngle = steeringCtrl(desired_y_pos, current_y_pos, last_y_pos, (current_time - last_check_time))
-	speedPublisher(3,steeringAngle)
+	speedPublisher(7,steeringAngle)
+	print(data.poses[-1].pose.orientation.z*180/math.pi)
 
 	last_y_pos = current_y_pos
 	last_check_time = current_time
@@ -61,6 +64,8 @@ def steeringCtrl(desired_y_pos, current_y_pos, last_y_pos,timeInterval):
 	global B
 	global K
 	global kr
+	if timeInterval == 0:
+		return 0
 	x = matrix([[current_y_pos],[((current_y_pos - last_y_pos)/timeInterval)]])
 	u = -K*x + kr*desired_y_pos
 	xdot = A*x+B*u

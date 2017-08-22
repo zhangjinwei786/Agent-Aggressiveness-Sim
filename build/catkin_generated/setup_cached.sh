@@ -7,5 +7,7 @@
 # new environment variables
 
 # modified environment variables
-export PWD="/home/jinwei/catvehicle_ws/build"
-export ROS_PACKAGE_PATH="/home/jinwei/catvehicle_ws/src:/opt/ros/indigo/share:/opt/ros/indigo/stacks"
+export CMAKE_PREFIX_PATH="/home/wavelab01/catvehicle_ws/devel:$CMAKE_PREFIX_PATH"
+export PWD="/home/wavelab01/catvehicle_ws/build"
+export ROSLISP_PACKAGE_DIRECTORIES="/home/wavelab01/catvehicle_ws/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
+export ROS_PACKAGE_PATH="/home/wavelab01/catvehicle_ws/src:$ROS_PACKAGE_PATH"

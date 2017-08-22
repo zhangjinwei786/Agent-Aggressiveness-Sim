@@ -28,31 +28,22 @@ This launch file loads the worlds and models for the catvehicle
 -->
 
 <launch>
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="false"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
 
-	  <arg name="paused" default="false"/>
-	  <arg name="use_sim_time" default="true"/>
-	  <arg name="gui" default="false"/>
-	  <arg name="headless" default="false"/>
-	  <arg name="debug" default="false"/>
+      <arg name="front_vehicle_number" default="0"/>
 
-      <!--
-      <arg name="worldfile" default="enter_worldfile_no_path.world"/>
-      -->
-
-      <!-- change these defaults here, or as a cmd line arg, in order to turn off   -->
-      <!--   sensors that you aren't using, thus freeing up computational resources -->
-      <!--   and reducing storage space for your bagfiles -->
       <arg name="front_laser_points" default="true"/>
       <arg name="velodyne_points" default="true"/>
       <arg name="camera_right" default="false"/>
       <arg name="camera_left" default="false"/>
-      <!-- change these defaults here, to see further left with the velodyne   -->
       <arg name="velodyne_max_angle" default="0.4"/>
-      <!-- change these defaults here, to see further right with the velodyne   -->
       <arg name="velodyne_min_angle" default="-0.4"/>
 
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find driving_agent_simulation)/worlds/highway_environment_test.world"/>
+  <include file="$(find driving_agent_simulation)/launch/load_world.launch">
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
     <arg name="paused" value="$(arg paused)"/>
@@ -60,39 +51,7 @@ This launch file loads the worlds and models for the catvehicle
     <arg name="headless" value="$(arg headless)"/>
   </include>
 
-<group ns="main_car">
-<param name="robot_description"
-         command="$(find xacro)/xacro.py '$(find catvehicle)/urdf/catvehicle.xacro' roboname:='main_car' front_laser_points:='$(arg front_laser_points)' velodyne_points:='$(arg velodyne_points)' camera_right:='$(arg camera_right)' camera_left:='$(arg camera_left)' velodyne_max_angle:='$(arg velodyne_max_angle)' velodyne_min_angle:='$(arg velodyne_min_angle)'" />
-
-<include file="$(find catvehicle)/launch/catvehicle.launch">
-    <arg name="robot_name" value="main_car"/>
-    <arg name="init_pose" value="-x 0 -y 6 -z 0.05"/>
-    <arg name="config_file" value="catvehicle_control.yaml"/>
-</include>
-</group>
-
-<group ns="one_front_car">
-<param name="robot_description"
-         command="$(find xacro)/xacro.py '$(find catvehicle)/urdf/catvehicle.xacro' roboname:='one_front_car' front_laser_points:='$(arg front_laser_points)' velodyne_points:='$(arg velodyne_points)' camera_right:='$(arg camera_right)' camera_left:='$(arg camera_left)' velodyne_max_angle:='$(arg velodyne_max_angle)' velodyne_min_angle:='$(arg velodyne_min_angle)'" />
-
-<include file="$(find catvehicle)/launch/catvehicle.launch">
-    <arg name="robot_name" value="one_front_car"/>
-    <arg name="init_pose" value="-x 30 -y 2 -z 0.05"/>
-    <arg name="config_file" value="catvehicle_control.yaml"/>
-</include>
-</group>
-
-<!-- This is the code for second front car
-<group ns="two_front_car">
-<param name="robot_description"
-         command="$(find xacro)/xacro.py '$(find catvehicle)/urdf/catvehicle.xacro' roboname:='two_front_car' front_laser_points:='$(arg front_laser_points)' velodyne_points:='$(arg velodyne_points)' camera_right:='$(arg camera_right)' camera_left:='$(arg camera_left)' velodyne_max_angle:='$(arg velodyne_max_angle)' velodyne_min_angle:='$(arg velodyne_min_angle)'" />
-
-<include file="$(find catvehicle)/launch/catvehicle.launch">
-    <arg name="robot_name" value="two_front_car"/>
-    <arg name="init_pose" value="-x 30 -y -2 -z 0.05"/>
-    <arg name="config_file" value="catvehicle_control.yaml"/>
-</include>
-</group>
--->
+  <node name="vehicle_assign$(arg front_vehicle_number)" pkg="driving_agent_simulation" type="vehicle_assignment.py" respawn="true" output="screen" args="$(arg front_vehicle_number)">
+  </node>
 
 </launch>

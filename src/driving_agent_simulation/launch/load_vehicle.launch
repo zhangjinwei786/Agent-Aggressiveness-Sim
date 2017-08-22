@@ -1,0 +1,45 @@
+<launch>
+
+	<!-- change these defaults here, or as a cmd line arg, in order to turn off   -->
+	<!--   sensors that you aren't using, thus freeing up computational resources -->
+	<!--   and reducing storage space for your bagfiles -->
+	<arg name="front_laser_points" default="true"/>
+	<arg name="velodyne_points" default="true"/>
+	<arg name="camera_right" default="false"/>
+	<arg name="camera_left" default="false"/>
+	<!-- change these defaults here, to see further left with the velodyne   -->
+	<arg name="velodyne_max_angle" default="0.4"/>
+	<!-- change these defaults here, to see further right with the velodyne   -->
+	<arg name="velodyne_min_angle" default="-0.4"/>
+
+
+	<arg name="vehicle_name" default="0_front_car"/>
+	<arg name="init_pos_x" default="0"/>
+	<arg name="init_pos_y" default="0"/>
+	<arg name="is_agent" default="false"/>
+	<arg name="front_vehicle_number" default="0"/>
+
+
+	<group ns='$(arg vehicle_name)'>
+	<param name="robot_description"
+	         command="$(find xacro)/xacro.py '$(find catvehicle)/urdf/catvehicle.xacro' roboname:='$(arg vehicle_name)' front_laser_points:='$(arg front_laser_points)' velodyne_points:='$(arg velodyne_points)' camera_right:='$(arg camera_right)' camera_left:='$(arg camera_left)' velodyne_max_angle:='$(arg velodyne_max_angle)' velodyne_min_angle:='$(arg velodyne_min_angle)'" />
+
+	<include file="$(find catvehicle)/launch/catvehicle.launch">
+	    <arg name="robot_name" value='$(arg vehicle_name)'/>
+	    <arg name="init_pose" value="-x '$(arg init_pos_x)' -y '$(arg init_pos_y)' -z 0.05"/>
+	    <arg name="config_file" value="catvehicle_control.yaml"/>
+	</include>
+
+	<!-- run NPC Driver if it's not agent-->
+	<group unless="$(arg is_agent)">
+		<node name="npc_driver" pkg="driving_agent_simulation" type="npc_driver.py" respawn="true" output="screen" args="$(arg vehicle_name) $(arg init_pos_x) $(arg init_pos_y)">
+		</node>
+	</group>
+	<group if="$(arg is_agent)">
+		<node name="agent_driver" pkg="driving_agent_simulation" type="agent_driver_evasive_v3.py" respawn="true" output="screen" args="$(arg vehicle_name) $(arg init_pos_x) $(arg init_pos_y) $(arg front_vehicle_number)">
+		</node>
+	</group>
+	</group>
+	
+
+</launch>

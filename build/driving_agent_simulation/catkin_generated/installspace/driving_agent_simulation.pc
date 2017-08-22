@@ -1,8 +1,8 @@
-prefix=/home/jinwei/catvehicle_ws/install
+prefix=/home/wavelab01/catvehicle_ws/install
 
 Name: driving_agent_simulation
 Description: Description of driving_agent_simulation
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/jinwei/catvehicle_ws/install/lib 
+Libs: -L/home/wavelab01/catvehicle_ws/install/lib 
 Requires: 

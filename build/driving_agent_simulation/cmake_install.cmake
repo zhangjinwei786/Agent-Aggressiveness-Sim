@@ -1,8 +1,8 @@
-# Install script for directory: /home/jinwei/catvehicle_ws/src/driving_agent_simulation
+# Install script for directory: /home/wavelab01/catvehicle_ws/src/driving_agent_simulation
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/jinwei/catvehicle_ws/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/wavelab01/catvehicle_ws/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/jinwei/catvehicle_ws/build/driving_agent_simulation/catkin_generated/installspace/driving_agent_simulation.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/wavelab01/catvehicle_ws/build/driving_agent_simulation/catkin_generated/installspace/driving_agent_simulation.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/driving_agent_simulation/cmake" TYPE FILE FILES
-    "/home/jinwei/catvehicle_ws/build/driving_agent_simulation/catkin_generated/installspace/driving_agent_simulationConfig.cmake"
-    "/home/jinwei/catvehicle_ws/build/driving_agent_simulation/catkin_generated/installspace/driving_agent_simulationConfig-version.cmake"
+    "/home/wavelab01/catvehicle_ws/build/driving_agent_simulation/catkin_generated/installspace/driving_agent_simulationConfig.cmake"
+    "/home/wavelab01/catvehicle_ws/build/driving_agent_simulation/catkin_generated/installspace/driving_agent_simulationConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/driving_agent_simulation" TYPE FILE FILES "/home/jinwei/catvehicle_ws/src/driving_agent_simulation/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/driving_agent_simulation" TYPE FILE FILES "/home/wavelab01/catvehicle_ws/src/driving_agent_simulation/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

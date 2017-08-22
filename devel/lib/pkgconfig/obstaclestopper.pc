@@ -1,8 +1,8 @@
-prefix=/home/jinwei/catvehicle_ws/devel
+prefix=/home/wavelab01/catvehicle_ws/devel
 
 Name: obstaclestopper
 Description: Description of obstaclestopper
 Version: 1.0.1
 Cflags: 
-Libs: -L/home/jinwei/catvehicle_ws/devel/lib 
+Libs: -L/home/wavelab01/catvehicle_ws/devel/lib 
 Requires: geometry_msgs roscpp std_msgs

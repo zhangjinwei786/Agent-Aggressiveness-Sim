@@ -119,8 +119,8 @@ int main( int argc, char **argv )
 	n.param("scan_topic", scan_topic, std::string("/scan"));
 //	n.param("angle_min", angle_min, -M_PI/32.0f);
 //	n.param("angle_max", angle_max, M_PI/32.0f);
-	n.param("angle_min", angle_min, -0.1);
-	n.param("angle_max", angle_max, 0.1);
+	n.param("angle_min", angle_min, -0.19);
+	n.param("angle_max", angle_max, 0.19);
 
     ROS_INFO_STREAM("Node namespace is " << ros::this_node::getNamespace());
     ROS_INFO_STREAM("Node name is " << ros::this_node::getName( ) );
@@ -138,7 +138,7 @@ int main( int argc, char **argv )
     ROS_INFO_STREAM("Publishing estimated angle to target in topic " << ros::this_node::getName( ) << "/" << angle_topic);
 
   	// run at 50Hz?
-  	ros::Rate loop_rate(1000);
+  	ros::Rate loop_rate(100);
     lastUpdate = ros::Time();
     newMessage = false;
 

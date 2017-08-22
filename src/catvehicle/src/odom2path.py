@@ -121,7 +121,7 @@ def main(argv):
             exit.sys()
 
     node = odom2path(ns)
-    rate = rospy.Rate(10) # run at 10Hz
+    rate = rospy.Rate(20) # run at 10Hz
     while not rospy.is_shutdown():
         node.publish()
         rate.sleep()

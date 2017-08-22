@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "geometry_msgs;roscpp;std_msgs".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "obstaclestopper"
-PROJECT_SPACE_DIR = "/home/jinwei/catvehicle_ws/devel"
+PROJECT_SPACE_DIR = "/home/wavelab01/catvehicle_ws/devel"
 PROJECT_VERSION = "1.0.1"
