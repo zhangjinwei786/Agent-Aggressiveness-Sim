@@ -125,18 +125,6 @@ class npc_driver:
 			if self.frontDist > criticalDist:	# switch state from low-speed to normal-speed
 				self.vehicleState = 1
 				self.desire_x_vel = random.randint(minSpeed,maxSpeed)
-				'''
-				if self.ns == '1_front_car' :
-					self.desire_x_vel = 5
-				elif self.ns == '2_front_car' :
-					self.desire_x_vel = 7
-				elif self.ns == '3_front_car' :
-					self.desire_x_vel = 7
-				elif self.ns == '4_front_car' :
-					self.desire_x_vel = 7
-				else:
-					self.desire_x_vel = 5
-				'''
 				print(self.ns + ' switch to normal-speed mode: ' + str(self.desire_x_vel) + ' m/s')
 		elif self.vehicleState == 1:
 			if self.frontDist <= criticalDist:	# switch state from normal-speed to low-speed
@@ -160,7 +148,7 @@ class npc_driver:
 
 	# ************* Steering controller helper functions *************
 
-	# Setup car's steering dynamic and PD+feed forward controller
+	# Setup car's steering dynamic feedback controller.
 	def steeringCtrlConfig(self):
 		self.A = matrix([[0,1],[0,0]])
 		self.B = matrix([[self.gamma],[1]])
@@ -185,12 +173,14 @@ class npc_driver:
 		else:
 			self.z_vel = sign(xdot[0,0])* limit
 
+
 	# Update time stamp for every loop.
 	def recordLastMsg(self):
 		self.lastMsg = time.time()
 
 
 def main(argv):
+
     # we eventually get the ns (namespace) from the ROS parameter server for this node
 	ns = sys.argv[1]
 	init_pos_x = float(sys.argv[2])
@@ -199,16 +189,29 @@ def main(argv):
 	rospy.loginfo('Initial position set in random: ' + '[' + str(init_pos_x) + ',' + str(init_pos_y) + ']')
 	node = npc_driver(ns,init_pos_x, init_pos_y)
 	rate = rospy.Rate(20) # run at 20Hz
+	
 	while not rospy.is_shutdown():
 		if node.startFlag:
 			node.steeringCtrlConfig()
 	    	node.startFlag = False
 		if node.godSwitch:
-			node.speedController(10, 6, 6)
-			node.P_Controller(3, 0.1)
-			node.steeringCtrl(init_pos_y, 0.3)
+			node.speedController(10, 5, 7)			# (critical distance, minSpeed, maxSpeed)
+			node.P_Controller(3, 0.1)				# (acceleration, tolerance)
+
+			## Since in this simulation, front vehicles are only go and keep straight line. So
+			## those steering controller are noe necessary to be used right now.
+
+			# node.steeringCtrl(init_pos_y, 0.3)		# (reference input in y axis, steering_limit)
 			node.speedPublisher()
-			node.recordLastMsg()
+		else:
+			# reset vehicleState as slow-speed mode, and set desire speed as zero.
+			# in this way the vehicle will slow down and stop instead of sudden stop
+			# and drift.
+			node.vehicleState = 0
+			node.desire_x_vel = 0
+			node.P_Controller(3, 0.05)
+			node.speedPublisher()
+		node.recordLastMsg()
 		rate.sleep()
 
 if __name__ == '__main__':

@@ -355,6 +355,8 @@ class agent_driver:
 
 
 def main(argv):
+
+	# we eventually get the ns (namespace) from the ROS parameter server for this node
 	ns = sys.argv[1]
 	init_pos_x = float(sys.argv[2])
 	init_pos_y = float(sys.argv[3])
@@ -368,6 +370,9 @@ def main(argv):
 		if node.startFlag:
 			node.configCSV(frontVehiclesNum)
 			node.startFlag = False
+			while not node.godSwitch:
+				print('Waiting for start...')
+				rospy.sleep(1)
 		if node.godSwitch:
 			node.potentialField()
 			node.steeringCtrl(12, 0.13, 9, 0.2)	# (high_speed, highLimit, low_speed, lowLimit)
@@ -376,8 +381,12 @@ def main(argv):
 			node.speedPublisher()
 			node.writeData()
 		else:
-			print('Waiting for start...')
-			rospy.sleep(1)
+			# reset vehicleState as slow-speed mode, and set desire speed as zero.
+			# in this way the vehicle will slow down and stop instead of sudden stop
+			# and drift.
+			node.agent_desire_x_vel = 0
+			node.P_Controller(12, 0.05)
+			node.speedPublisher()
 		node.recordLastMsg()
 		rate.sleep()
 

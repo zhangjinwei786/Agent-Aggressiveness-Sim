@@ -111,7 +111,7 @@ class agent_driver:
 		if self.godSwitch == True:
 			print('Simulation starts')
 		else:
-			print('Simulation ends')
+			print('Simulation pauses')
 
 	def distUpdate(self, data):
 		self.frontDist = data.data
@@ -130,6 +130,7 @@ class agent_driver:
 
  	# **********************************************************************
 
+	# ************** potential field function helper functions *************
 
  	def potentialField_boundaries(self, detect_y_min, detect_y_max, bound_min, bound_max):
 
@@ -413,11 +414,11 @@ class agent_driver:
 			limit = lowLimit - (lowLimit - highLimit)/(high_speed - low_speed)
 		else:
 			limit = highLimit
-		PD_ctrl = 0.8 * self.steeringError + 0 * (self.steeringError - self.steeringError_last)/(time.time() - self.lastMsg)
-		if abs(PD_ctrl) <= limit:
-			self.agent_z_vel = PD_ctrl
+		PD_output = 0.8 * self.steeringError + 0 * (self.steeringError - self.steeringError_last)/(time.time() - self.lastMsg)
+		if abs(PD_output) <= limit:
+			self.agent_z_vel = PD_output
 		else:
-			self.agent_z_vel = sign(PD_ctrl) * limit
+			self.agent_z_vel = sign(PD_output) * limit
 
 	# Update time stamp for every loop.
 	def recordLastMsg(self):
@@ -453,6 +454,8 @@ class agent_driver:
 
 
 def main(argv):
+
+    # we eventually get the ns (namespace) from the ROS parameter server for this node
 	ns = sys.argv[1]
 	init_pos_x = float(sys.argv[2])
 	init_pos_y = float(sys.argv[3])
@@ -466,6 +469,9 @@ def main(argv):
 		if node.startFlag:
 			node.configCSV(frontVehiclesNum)
 			node.startFlag = False
+			while not node.godSwitch:
+				print('Waiting for start...')
+				rospy.sleep(1)
 		if node.godSwitch:
 			node.potentialField()
 			node.steeringCtrl(12, 0.17, 7, 0.25)	# (high_speed, highLimit, low_speed, lowLimit)
@@ -474,8 +480,12 @@ def main(argv):
 			node.speedPublisher()
 			node.writeData()
 		else:
-			print('Waiting for start...')
-			rospy.sleep(1)
+			# reset vehicleState as slow-speed mode, and set desire speed as zero.
+			# in this way the vehicle will slow down and stop instead of sudden stop
+			# and drift.
+			node.agent_desire_x_vel = 0
+			node.P_Controller(12, 0.05)
+			node.speedPublisher()
 		node.recordLastMsg()
 		rate.sleep()
 

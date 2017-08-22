@@ -36,7 +36,7 @@
 		</node>
 	</group>
 	<group if="$(arg is_agent)">
-		<node name="agent_driver" pkg="driving_agent_simulation" type="agent_driver_evasive_v3.py" respawn="true" output="screen" args="$(arg vehicle_name) $(arg init_pos_x) $(arg init_pos_y) $(arg front_vehicle_number)">
+		<node name="agent_driver" pkg="driving_agent_simulation" type="agent_driver_aggressive_v2.py" respawn="true" output="screen" args="$(arg vehicle_name) $(arg init_pos_x) $(arg init_pos_y) $(arg front_vehicle_number)">
 		</node>
 	</group>
 	</group>
