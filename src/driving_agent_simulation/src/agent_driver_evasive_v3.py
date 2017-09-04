@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
-import sys, time, datetime, csv
+import sys, time, datetime, os, csv
 from copy import deepcopy
 from numpy import matrix, sign, exp
 from numpy.linalg import inv
@@ -430,7 +430,8 @@ class agent_driver:
 
 	def configCSV(self, frontVehiclesNum):
 		self.startdateNTime = str(datetime.datetime.now())
-		with open("/home/wavelab01/Documents/" + self.startdateNTime + '.csv', 'wb') as csvfile:
+		target_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'Path_data/Evasive_data'))
+		with open(str(target_path) + "/" + self.startdateNTime + '.csv', 'wb') as csvfile:
 			filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
 			initialMark = ['Time', 'agent_x', 'agent_y', 'agent_theta']
 			for n in range(1, frontVehiclesNum+1):
@@ -440,7 +441,8 @@ class agent_driver:
 			filewriter.writerow(initialMark)
 
 	def writeData(self):
-		with open("/home/wavelab01/Documents/" + self.startdateNTime + '.csv', 'a') as csvfile:
+		target_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'Path_data/Evasive_data'))
+		with open(str(target_path) + "/" + self.startdateNTime + '.csv', 'a') as csvfile:
 			filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
 			dataInRow = [str(time.time()), str(self.agent_pos[0]), str(self.agent_pos[1]), str(self.agent_angle)]
 			for n in range(1, len(self.neighborsPosesDict)+1):
@@ -468,6 +470,7 @@ def main(argv):
 	while not rospy.is_shutdown():
 		if node.startFlag:
 			node.configCSV(frontVehiclesNum)
+			print('Evasive driver is already set up.')
 			node.startFlag = False
 			while not node.godSwitch:
 				print('Waiting for start...')

@@ -35,6 +35,7 @@ This launch file loads the worlds and models for the catvehicle
     <arg name="debug" default="false"/>
 
       <arg name="front_vehicle_number" default="0"/>
+      <arg name="aggressiveness" default="false"/>
 
       <arg name="front_laser_points" default="true"/>
       <arg name="velodyne_points" default="true"/>
@@ -51,7 +52,7 @@ This launch file loads the worlds and models for the catvehicle
     <arg name="headless" value="$(arg headless)"/>
   </include>
 
-  <node name="vehicle_assign$(arg front_vehicle_number)" pkg="driving_agent_simulation" type="vehicle_assignment.py" respawn="true" output="screen" args="$(arg front_vehicle_number)">
+  <node name="vehicle_assign$(arg front_vehicle_number)" pkg="driving_agent_simulation" type="vehicle_assignment.py" respawn="true" output="screen" args="$(arg front_vehicle_number) $(arg aggressiveness)">
   </node>
 
 </launch>

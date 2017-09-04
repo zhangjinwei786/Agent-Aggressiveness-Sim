@@ -17,6 +17,7 @@
 	<arg name="init_pos_x" default="0"/>
 	<arg name="init_pos_y" default="0"/>
 	<arg name="is_agent" default="false"/>
+	<arg name="aggressiveness" default="false"/>
 	<arg name="front_vehicle_number" default="0"/>
 
 
@@ -36,8 +37,14 @@
 		</node>
 	</group>
 	<group if="$(arg is_agent)">
-		<node name="agent_driver" pkg="driving_agent_simulation" type="agent_driver_aggressive_v2.py" respawn="true" output="screen" args="$(arg vehicle_name) $(arg init_pos_x) $(arg init_pos_y) $(arg front_vehicle_number)">
-		</node>
+		<group if="$(arg aggressiveness)">
+			<node name="agent_driver" pkg="driving_agent_simulation" type="agent_driver_aggressive_v2.py" respawn="true" output="screen" args="$(arg vehicle_name) $(arg init_pos_x) $(arg init_pos_y) $(arg front_vehicle_number)">
+			</node>
+		</group>
+		<group unless="$(arg aggressiveness)">
+			<node name="agent_driver" pkg="driving_agent_simulation" type="agent_driver_evasive_v3.py" respawn="true" output="screen" args="$(arg vehicle_name) $(arg init_pos_x) $(arg init_pos_y) $(arg front_vehicle_number)">
+			</node>
+		</group>
 	</group>
 	</group>
 	

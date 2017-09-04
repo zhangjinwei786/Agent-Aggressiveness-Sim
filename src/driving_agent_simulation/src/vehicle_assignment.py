@@ -32,6 +32,7 @@ def positionsSetup(frontVehiclesNum):
 
 	# initializing the node and type of argv. 
 	frontVehiclesNum = int(frontVehiclesNum[0])
+
 	rospy.init_node('vehicle_assign', anonymous=True)
 
 	# initialize all posible positions, shown in 2-dim matrices, for front car and agent cars.
@@ -83,19 +84,24 @@ def loadingVehicles(vehicleInfoList):
 	robot_xPos = vehicleInfoList[1][0]
 	robot_yPos = vehicleInfoList[1][1]
 	numOfVehicles = int(sys.argv[1:][0])
+	aggressiveness = str(sys.argv[1:][1])
+	if not (aggressiveness == "true" or aggressiveness == "false"):
+		rospy.logerr('Undefined arguments of aggressive. It has to be defined either "true" or "false". All letters are lower cases.')
+		return
 
 	# simulate Linux terminal and load corresponding vehicle's simulation stuff.
 	if vehicleNum == -1:
 		robot_name = 'agent_car'
 		rospy.loginfo(robot_name + 'position is at: ' + str(robot_xPos) + ',' + str(robot_yPos))
-		os.system('roslaunch driving_agent_simulation load_vehicle.launch vehicle_name:=' + robot_name + ' init_pos_x:=' + str(robot_xPos) + ' init_pos_y:=' + str(robot_yPos) + ' is_agent:=true' + ' front_vehicle_number:=' + str(numOfVehicles))
+		os.system('roslaunch driving_agent_simulation load_vehicle.launch vehicle_name:=' + robot_name + ' init_pos_x:=' + str(robot_xPos) + ' init_pos_y:=' + str(robot_yPos) + ' is_agent:=true' + ' front_vehicle_number:=' + str(numOfVehicles) + ' aggressiveness:=' + aggressiveness)
 	else:
 		robot_name = str(vehicleNum)+'_front_car'
 		rospy.loginfo(robot_name + 'position is at: ' + str(robot_xPos) + ',' + str(robot_yPos))
 		os.system('roslaunch driving_agent_simulation load_vehicle.launch vehicle_name:=' + robot_name + ' init_pos_x:=' + str(robot_xPos) + ' init_pos_y:=' + str(robot_yPos) + ' is_agent:=false')
 
-
-def run(frontVehiclesNum):
+def run(argv):
+	frontVehiclesNum = argv[0]
+	aggressiveness = argv[1]
 	assigned_posList = positionsSetup(frontVehiclesNum)
 	# I think the variable in Pool means how many multithreads, in maximum, can
 	# be supported. It can also be adjusted based on computer's performance.
