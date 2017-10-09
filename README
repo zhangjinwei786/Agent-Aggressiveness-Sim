@@ -1,4 +1,2 @@
 This virtual environment is based on Gazebo. In the virtual highway the agent car is going to chase front cars. We are going to develop its controller to describe different driving behaviors of aggressive drivers and non-aggressive drivers. The car's tragectories will be generated for futhur researches.
-<html>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/7NsiewWoArU" frameborder="0" allowfullscreen></iframe>
-</html>
+Video Link: https://www.youtube.com/embed/7NsiewWoArU
